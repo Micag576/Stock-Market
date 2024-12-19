@@ -19,12 +19,25 @@ def updatePrices():
 
 
 def viewPortfolio():
-    print("{0:20s}{1:10s}{2:25s}{3:25s}{4:6s}{5:10s}".format("Name of Stock","Ticker","Industry","Price","QTY","Gain/Loss"))
+    print("{0:20s}{1:10s}{2:25s}{3:25s}{4:6s}{5:10s}".format("Name of Stock", "Ticker", "Industry", "Price", "QTY", "Gain/Loss"))
     count = 1
     for stock in portfolio:
-        #implement the gain/loss algorithim
-        print(f"{count}, {stock.name:{17}}{stock.ticker:{10}}{stock.sector:{25}}${stock.currentPrice:{8}}{stock.numOfShares:{6}}")
-        count+=1
+        gain_loss = round((stock.currentPrice - stock.orginalPrice) * stock.numOfShares,2)
+        print(f"{count}, {stock.name:{17}}{stock.ticker:{10}}{stock.sector:{25}}${stock.currentPrice:{8}}{stock.numOfShares:{18}}{gain_loss:{10}}")
+        count += 1
+
+def searchBySector(sector):
+    print(f"\nSearching for stocks in the {sector} sector...")
+    print("{0:20s}{1:10s}{2:25s}{3:25s}{4:6s}{5:10s}".format("Name of Stock", "Ticker", "Industry", "Price", "QTY", "Gain/Loss"))
+    count = 1
+    found = False
+    for stock in portfolio:
+        if stock.sector.lower() == sector.lower():  # Case insensitive matching
+            print(f"{count}, {stock.name:{17}}{stock.ticker:{10}}{stock.sector:{25}}${stock.currentPrice:{8}}{stock.numOfShares:{6}}")
+            count += 1
+            found = True
+    if not found:
+        print(f"No stocks found in the {sector} sector.")
 
 def mainMenu():
     print("Main Menu")
@@ -52,7 +65,8 @@ while(status):
         updatePrices()
         viewPortfolio()
     elif choice == "3":
-        pass 
+        sector = input("Enter the sector to search for: ")
+        searchBySector(sector)
     elif choice == "4":
         viewPortfolio()
     elif choice == "5":
