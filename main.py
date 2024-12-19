@@ -2,6 +2,7 @@ from stock import Stock
 from yahoo_fin import stock_info
 import yfinance as yf
 import warnings
+import os
 warnings.filterwarnings("ignore")
 
 portfolio =[]
@@ -32,7 +33,7 @@ def searchBySector(sector):
     count = 1
     found = False
     for stock in portfolio:
-        if stock.sector.lower() == sector.lower():  # Case insensitive matching
+        if stock.sector.lower() == sector.lower(): 
             print(f"{count}, {stock.name:{17}}{stock.ticker:{10}}{stock.sector:{25}}${stock.currentPrice:{8}}{stock.numOfShares:{6}}")
             count += 1
             found = True
@@ -54,6 +55,7 @@ status = True
 while(status):
     mainMenu()
     choice = input("Select from the following options")
+    os.system('cls' if os.name == 'nt' else 'clear')
     if choice == "1":
         name = input("Enter the Name of the Stock: ")
         ticker = input("Enter the stock ticker name: ")
